@@ -1,0 +1,22 @@
+{
+  "name": "ts-ast",
+  "version": "0.0.1",
+  "description": "typescript ast indexer",
+  "main": "build/index.js",
+  "scripts": {
+    "start": "nodemon build/index.js",
+    "dev": "npm run build && concurrently \"npm start\" \"npm run build:watch\"",
+    "build": "tsc src/index.ts --outDir build/",
+    "build:watch": "tsc src/index.ts --outDir build/ -w",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mateusz przybylowski",
+  "license": "MIT",
+  "dependencies": {
+    "typescript": "^3.7.3"
+  },
+  "devDependencies": {
+    "concurrently": "^5.0.1",
+    "nodemon": "^2.0.2"
+  }
+}
