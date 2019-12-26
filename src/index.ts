@@ -1,3 +1,3 @@
-//import { simpleTransformer } from './simpleTransformer';
+import { simpleTransformer } from './simpleTransformer';
 
-//simpleTransformer();
+simpleTransformer();
