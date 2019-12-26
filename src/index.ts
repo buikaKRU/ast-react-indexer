@@ -1,3 +1,5 @@
 import { simpleTransformer } from './simpleTransformer';
+import { reprintSections } from './reprintSections';
 
-simpleTransformer();
+// simpleTransformer();
+reprintSections('typescriptFile.ts', ['testingInterface'])
