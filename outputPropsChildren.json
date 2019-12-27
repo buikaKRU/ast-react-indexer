@@ -1,0 +1,8 @@
+[
+  {
+    "doc": "/** This is some comment about Props\n * which should be read by AST reader\n */"
+  },
+  {
+    "name": "Props"
+  }
+]

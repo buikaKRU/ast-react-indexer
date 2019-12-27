@@ -1,0 +1,21 @@
+{
+  "name": "Props",
+  "comment": "",
+  "members": [
+    {
+      "name": "dsCount",
+      "optional": true,
+      "value": "number"
+    },
+    {
+      "name": "dsVariant",
+      "optional": false,
+      "value": "\n  /** Variant of Component */'standard' | 'primary'"
+    },
+    {
+      "name": "dsColor",
+      "optional": false,
+      "value": "string"
+    }
+  ]
+}
