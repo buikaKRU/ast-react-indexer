@@ -47,29 +47,30 @@ export function reprintSections(file: string, identifiers: string[]): void {
     const container = identifiers.includes(name) ? foundNodes : unfoundNodes;
     container.push([name, node]);
 
-    findProps(node, sourceFile);
+    // findProps(node, sourceFile);
+    findPropsGetChildren(node, sourceFile);
   });
 
-  // Either print the found nodes, or offer a list of what identifiers were found
-  if (!foundNodes.length) {
-    console.log(
-      `Could not find any of ${identifiers.join(
-        ', '
-      )} in ${file}, found: ${unfoundNodes
-        .filter(f => f[0])
-        .map(f => f[0])
-        .join(', ')}.`
-    );
-    process.exitCode = 1;
-  } else {
-    foundNodes.map(f => {
-      const [name, node] = f;
-      console.log('### ' + name + '\n');
-      console.log(
-        printer.printNode(ts.EmitHint.Unspecified, node, sourceFile)
-      ) + '\n';
-    });
-  }
+  // // Either print the found nodes, or offer a list of what identifiers were found
+  // if (!foundNodes.length) {
+  //   console.log(
+  //     `Could not find any of ${identifiers.join(
+  //       ', '
+  //     )} in ${file}, found: ${unfoundNodes
+  //       .filter(f => f[0])
+  //       .map(f => f[0])
+  //       .join(', ')}.`
+  //   );
+  //   process.exitCode = 1;
+  // } else {
+  //   foundNodes.map(f => {
+  //     const [name, node] = f;
+  //     console.log('### ' + name + '\n');
+  //     console.log(
+  //       printer.printNode(ts.EmitHint.Unspecified, node, sourceFile)
+  //     ) + '\n';
+  //   });
+  // }
 
   //writeFileSync('./output.json', JSON.stringify(nodesArray, null, 2));
 }
@@ -90,7 +91,7 @@ const findProps = (node: ts.Node, sourceFile: ts.SourceFile) => {
 
   if (node.name.escapedText === 'Props') {
     foundProps.name = 'Props';
-    findPropsGetChildren(node, sourceFile)
+    findPropsGetChildren(node, sourceFile);
     ts.forEachChild(node, currentNode => {
       // console.log(currentNode)
 
@@ -123,7 +124,7 @@ const findProps = (node: ts.Node, sourceFile: ts.SourceFile) => {
           .replace('?', '')
           .replace(':', '')
           .replace(';', '')
-          .replace('\n   ', '')
+          .replace('\n   ', '');
 
         props.value = value;
         foundProps.members.push(props);
@@ -137,18 +138,85 @@ const findProps = (node: ts.Node, sourceFile: ts.SourceFile) => {
 };
 
 const findPropsGetChildren = (node: ts.Node, sourceFile: ts.SourceFile) => {
+  type Property = {
+    name: string;
+    doc: string;
+    type: string;
+    optional: boolean;
+  };
+  const propertiesArray: Property[] = [];
 
   const children = node.getChildren(sourceFile);
-  let content = []
+  //let content = [];
 
-  children.forEach(child => {
-    if (ts.isIdentifier(child)){
-      content.push({name: child.getText(sourceFile)})
-    }
-    if (ts.isJSDoc(child)) {
-      content.push({doc: child.getText(sourceFile)})
-    }
-  })
-  writeFileSync('./outputPropsChildren.json', JSON.stringify(content, null, 2));
+  const readProps = (
+    propertySignature: ts.Node,
+    sourceFile: ts.SourceFile
+  ): Property => {
+    const property: Property = {
+      name: '',
+      doc: null,
+      type: null,
+      optional: false
+    };
 
-}
+    propertySignature.getChildren(sourceFile).forEach(item => {
+      if (ts.isIdentifier(item)) {
+        property.name = item.getText(sourceFile);
+      }
+      if (ts.isJSDoc(item)) {
+        property.doc = item
+          .getText(sourceFile)
+          .replace('/**', '')
+          .replace('*/', '')
+          .replace('*', '');
+      }
+      if (item.kind === 57) {
+        property.optional = true;
+      }
+    });
+
+    property.type = propertySignature
+      .getText(sourceFile)
+      .replace(property.name, '')
+      .replace('?', '')
+      .replace(':', '')
+      .replace(';', '')
+      .replace('\n   ', '');
+
+    return property;
+  };
+
+  if (!ts.isInterfaceDeclaration(node)) {
+    return;
+  }
+
+  if (node.name.escapedText === 'Props') {
+    children.forEach(child => {
+      if (ts.isIdentifier(child)) {
+        //content.push({ name: child.getText(sourceFile) });
+      }
+      if (ts.isJSDoc(child)) {
+        //content.push({ doc: child.getText(sourceFile) });
+      }
+
+      if (child.kind === 317) {
+        console.log(node.kind);
+
+        const syntaxList = child.getChildren(sourceFile);
+
+        syntaxList.forEach(propertySignature => {
+          console.log(propertySignature.getFullText(sourceFile));
+          if (ts.isPropertySignature(propertySignature)) {
+            // console.log(readProps(propertySignature, sourceFile));
+            propertiesArray.push(readProps(propertySignature, sourceFile));
+          }
+        });
+      }
+    });
+    writeFileSync(
+      './outputPropsChildren.json',
+      JSON.stringify(propertiesArray, null, 2)
+    );
+  }
+};

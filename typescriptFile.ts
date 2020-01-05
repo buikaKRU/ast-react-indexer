@@ -3,8 +3,12 @@
  * which should be read by AST reader
  */
 interface Props {
-  dsCount?: number;
+  dsGhost?: boolean;
   /** Variant of Component */
   dsVariant: 'standard' | 'primary';
   dsColor: string
+  /** This method gets invoked after every click event */
+  dsOnClick: (event: MouseEvent) => void
+  /** Initial Value*/
+  dsValue: number;
 }

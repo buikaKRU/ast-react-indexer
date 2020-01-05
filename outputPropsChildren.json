@@ -1,8 +1,32 @@
 [
   {
-    "doc": "/** This is some comment about Props\n * which should be read by AST reader\n */"
+    "name": "dsGhost",
+    "doc": null,
+    "type": " boolean",
+    "optional": true
   },
   {
-    "name": "Props"
+    "name": "dsVariant",
+    "doc": " Variant of Component ",
+    "type": " 'standard' | 'primary'",
+    "optional": false
+  },
+  {
+    "name": "dsColor",
+    "doc": null,
+    "type": " string",
+    "optional": false
+  },
+  {
+    "name": "dsOnClick",
+    "doc": " This method gets invoked after every click event ",
+    "type": " (event: MouseEvent) => void",
+    "optional": false
+  },
+  {
+    "name": "dsValue",
+    "doc": " Initial Value",
+    "type": " number",
+    "optional": false
   }
 ]
