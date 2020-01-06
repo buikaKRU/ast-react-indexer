@@ -1,24 +1,16 @@
 import { AstReader } from './AstReader';
 import * as ts from 'typescript';
+
+/** Reads ts class declaration name */
 export class AstClassReader extends AstReader {
-  protected processNode(node): void {
-    if (ts.isClassDeclaration(node)) {
-      const classNodes = node.getChildren(this.sourceFile);
-
-      classNodes.forEach(el => {
-        if (ts.isIdentifier(el)) {
-          console.log('@@@@@ class: ', el.escapedText);
-        }
-      });
-    }
-  }
-
+  /** Finds ts class declaration names
+   *  Returns only the first found class name.
+   */
   public find = (): string => {
     const foundClasses: string[] = [];
     ts.forEachChild(this.sourceFile, node => {
       if (ts.isClassDeclaration(node)) {
         const classNodes = node.getChildren(this.sourceFile);
-
         classNodes.forEach(el => {
           if (ts.isIdentifier(el)) {
             foundClasses.push(el.escapedText as string);
@@ -26,6 +18,7 @@ export class AstClassReader extends AstReader {
         });
       }
     });
+
     if (foundClasses.length > 1) {
       console.log('--- multiple classes found');
     }
@@ -35,6 +28,7 @@ export class AstClassReader extends AstReader {
     return foundClasses[0];
   };
 
+  /** Checks if there is a given ts class declaration name*/
   public check = (name: string) => {
     return this.find() === name;
   };

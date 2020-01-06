@@ -6,7 +6,4 @@ import { AstClassReader } from './astReader/AstClassReader';
 // reprintSections('typescriptFile.ts', ['testingInterface'])
 
 const classNameReader = new AstClassReader('simpleTsFile.ts');
-
-// console.log(classNameReader.find());
-
 console.log(classNameReader.check('TestClass2'));
