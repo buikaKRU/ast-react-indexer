@@ -5,9 +5,13 @@ import * as ts from 'typescript';
 export class AstNameReader extends AstReader {
   constructor(protected file: string) {
     super(file);
-    const defaultExport = this.findExport();
-    if (defaultExport) {
-      this.findReactFunctionComponent(defaultExport);
+
+    const defaultExportName = this.findExport();
+    if (
+      defaultExportName &&
+      this.checkReactFunctionComponent(defaultExportName)
+    ) {
+      this.foundReactComponentName = defaultExportName;
     }
   }
 
@@ -20,39 +24,39 @@ export class AstNameReader extends AstReader {
 
   private foundReactComponentName: string;
 
+  /** Finds default export variable name */
   private findExport = (): string => {
     let foundExport;
-
-    ts.forEachChild(this.sourceFile, fileNode => {
-      if (ts.isExportAssignment(fileNode)) {
-        ts.forEachChild(fileNode, exportNode => {
-          if (ts.isIdentifier(exportNode)) {
-            foundExport = exportNode.escapedText;
-          }
-        });
-      }
-    });
+    const exportNode = this.findFirstNode(node => ts.isExportAssignment(node));
+    if (exportNode) {
+      ts.forEachChild(
+        exportNode,
+        node =>
+          (foundExport = ts.isIdentifier(node) ? node.escapedText : undefined)
+      );
+    }
     return foundExport;
   };
 
-  private findReactFunctionComponent = (componentName: string): void => {
-    ts.forEachChild(this.sourceFile, fileNode => {
-      if (
-        ts.isVariableStatement(fileNode) &&
-        this.checkIdentifier(componentName, fileNode)
-      ) {
-        console.log('-------------!!!!!!!!!!  :)');
+  /** Checks  if exported variable exists as React.FunctionalComponent type */
+  private checkReactFunctionComponent = (componentName: string): boolean => {
+    let toReturn = false;
+    this.findNodes(node => ts.isVariableStatement(node)).forEach(node => {
+      if (this.checkIdentifier(componentName, node)) {
+        const qualifiedNameNode = this.findFirstNode(n => ts.isQualifiedName(n), node);
+        if (
+          this.checkIdentifier('React', qualifiedNameNode) &&
+          this.checkIdentifier('FunctionComponent', qualifiedNameNode)
+        ) {
+          toReturn = true;
+        }
       }
     });
+    return toReturn;
   };
 
-  // /** Returns first found ts class declaration name */
-  // get get(): string {
-  //   return this.foundClasses[0];
-  // }
-
-  // /** Checks if there is a given ts class declaration name*/
-  // check = (name: string) => {
-  //   return this.get === name;
-  // };
+  /** Returns first found ts class declaration name */
+  get get(): string {
+    return this.foundReactComponentName;
+  }
 }

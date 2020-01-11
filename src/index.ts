@@ -28,3 +28,4 @@ import AstPropsReader from './astReader/AstPropsReader';
 // );
 
 const nameReader = AstNameReader.build('src/DsNumber.tsx');
+console.log('Component name: ', nameReader.get)

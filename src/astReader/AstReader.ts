@@ -9,35 +9,51 @@ export abstract class AstReader {
   protected checkIdentifier = (
     identifier: string,
     nodes: ts.Node,
-    parentValue: { value: boolean } = { value: false }
+    toReturn: { value: boolean } = { value: false }
   ): boolean => {
-    if (parentValue.value !== true) {
+    if (toReturn.value !== true) {
       ts.forEachChild(nodes, node => {
         if (ts.isIdentifier(node) && node.escapedText === identifier) {
-          parentValue.value = true;
+          toReturn.value = true;
         } else if (node.getChildCount(this.sourceFile) > 0) {
-          this.checkIdentifier(identifier, node, parentValue);
+          this.checkIdentifier(identifier, node, toReturn);
         }
       });
     }
-    return parentValue.value;
+    return toReturn.value;
   };
 
-  protected findNode = (
+  /** Finds the first node which passes isCheck() */
+  protected findFirstNode = (
     isCheck: (node: ts.Node) => boolean,
-    nodes: ts.Node,
-    parentValue: ts.Node = undefined
+    nodes: ts.Node = this.sourceFile,
+    toReturn: {node: ts.Node} = {node: undefined},
   ): ts.Node => {
-    if (!parentValue) {
+    if (!toReturn.node) {
       ts.forEachChild(nodes, node => {
         if (isCheck(node)) {
-          console.log(node.getText(this.sourceFile))
-          parentValue = node
+          toReturn.node = node;
         } else if (node.getChildCount(this.sourceFile) > 0) {
-          this.findNode(isCheck, node, parentValue)
+          this.findFirstNode(isCheck, node, toReturn);
         }
-      })
+      });
     }
-    return parentValue
+    return toReturn.node;
+  };
+
+  /** Finds all nodes which passes isCheck() */
+  protected findNodes = (
+    isCheck: (node: ts.Node) => boolean,
+    nodes: ts.Node = this.sourceFile,
+    toReturn: ts.Node[] = []
+  ): ts.Node[] => {
+    ts.forEachChild(nodes, node => {
+      if (isCheck(node)) {
+        toReturn.push(node);
+      } else if (node.getChildCount(this.sourceFile) > 0) {
+        this.findNodes(isCheck, node, toReturn);
+      }
+    });
+    return toReturn;
   };
 }
