@@ -9,10 +9,8 @@ import AstPropsReader from './astReader/AstPropsReader';
 // reprintSections('typescriptFile.ts', ['testingInterface'])
 
 // const classNameReader = AstClassReader.build('ReactFile.tsx');
-// const componentPropsReader = AstPropsReader.build('src/DsNumber.tsx');
 
 // const componentName = classNameReader.get;
-// const componentProps = componentPropsReader.get;
 
 // console.log(classNameReader.check(componentName));
 // console.log('Class Name:', componentName);
@@ -22,10 +20,13 @@ import AstPropsReader from './astReader/AstPropsReader';
 //   console.log(prop.type);
 // });
 
-// writeFileSync(
-//   './outputProps.json',
-//   JSON.stringify(componentProps, null, 2)
-// );
 
 const nameReader = AstNameReader.build('src/DsNumber.tsx');
-console.log('Component name: ', nameReader.get)
+console.log('Component name: ', nameReader.get);
+
+const componentPropsReader = AstPropsReader.build('src/DsNumber.tsx');
+const componentProps = componentPropsReader.get;
+writeFileSync(
+  './outputProps.json',
+  JSON.stringify(componentProps, null, 2)
+);

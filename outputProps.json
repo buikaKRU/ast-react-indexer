@@ -21,13 +21,15 @@
     "name": "dsMin",
     "doc": "Minium value allowed ",
     "type": "number",
-    "optional": true
+    "optional": true,
+    "defaultValue": "0"
   },
   {
     "name": "dsMax",
     "doc": "Maximum value allowed ",
     "type": "number",
-    "optional": true
+    "optional": true,
+    "defaultValue": "10"
   },
   {
     "name": "dsPlaceholder",
@@ -39,7 +41,8 @@
     "name": "dsStep",
     "doc": "Legal number interval ",
     "type": "number",
-    "optional": true
+    "optional": true,
+    "defaultValue": "1"
   },
   {
     "name": "dsOnChange",
@@ -63,7 +66,8 @@
     "name": "disabled",
     "doc": "Native HTML5 disabled property ",
     "type": "boolean",
-    "optional": true
+    "optional": true,
+    "defaultValue": "false"
   },
   {
     "name": "id",
@@ -75,6 +79,7 @@
     "name": "dsVariant",
     "doc": "this is just for testing ",
     "type": "'standard' | 'secondary' | 'primary'",
-    "optional": false
+    "optional": false,
+    "defaultValue": "'standard'"
   }
 ]
