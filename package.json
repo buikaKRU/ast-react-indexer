@@ -4,16 +4,16 @@
   "description": "typescript ast indexer",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon build/index.js",
+    "start": "nodemon --ignore '*.json' build/index.js",
     "dev": "npm run build && concurrently \"npm start\" \"npm run build:watch\"",
-    "build": "tsc src/index.ts --outDir build/",
-    "build:watch": "tsc src/index.ts --outDir build/ -d -w",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc src/index.ts --outDir build/ -d -t ES5",
+    "build:watch": "tsc src/index.ts  --outDir build/ -d -t ES5 -w"
   },
   "author": "mateusz przybylowski",
   "license": "MIT",
   "dependencies": {
     "@types/node": "^13.1.0",
+    "@types/typescript": "^2.0.0",
     "typescript": "^3.7.3"
   },
   "devDependencies": {

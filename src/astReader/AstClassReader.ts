@@ -3,11 +3,9 @@ import * as ts from 'typescript';
 
 /** Reads ts class declaration name */
 export class AstClassReader extends AstReader {
-  constructor(protected file: string) {
-    super(file);
-    this.find();
-  }
-
+  /** Returns AstPropsReader object
+   * @param file - path to file
+   */
   static build = (file: string): AstClassReader => {
     return new AstClassReader(file);
   };
@@ -26,6 +24,10 @@ export class AstClassReader extends AstReader {
       }
     });
   };
+  constructor(protected file: string) {
+    super(file);
+    this.find();
+  }
 
   /** Returns first found ts class declaration name */
   get get(): string {

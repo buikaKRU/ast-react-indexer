@@ -12,14 +12,14 @@ interface Props {
   dsValue: number;
 }
 
-export default class ReactFile extends React.Component<Props> {
-  static defaultProps: Props = {
-    dsVariant: 'standard',
-    dsColor: 'red',
-    dsValue: 10
-  };
+const ReactFile: React.FunctionComponent<Props> = props => {
+  return <h1>{this.props.dsValue}</h1>;
+};
 
-  render() {
-    return <h1>{this.props.dsValue}</h1>;
-  }
-}
+ReactFile.defaultProps = {
+  dsVariant: 'standard',
+  dsColor: 'red',
+  dsValue: 10
+};
+
+export default ReactFile;

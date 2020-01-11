@@ -1,21 +1,80 @@
-{
-  "name": "Props",
-  "comment": "",
-  "members": [
-    {
-      "name": "dsCount",
-      "optional": true,
-      "value": "number"
-    },
-    {
-      "name": "dsVariant",
-      "optional": false,
-      "value": "\n  /** Variant of Component */'standard' | 'primary'"
-    },
-    {
-      "name": "dsColor",
-      "optional": false,
-      "value": "string"
-    }
-  ]
-}
+[
+  {
+    "name": "dsQa",
+    "doc": "Quaity Assurance. Set for unique targeting during testing ",
+    "type": "string",
+    "optional": false
+  },
+  {
+    "name": "dsLabel",
+    "doc": "Label text displayed over the input ",
+    "type": "string",
+    "optional": true
+  },
+  {
+    "name": "dsValue",
+    "doc": "State of the input. Can be changed internally and externally ",
+    "type": "number",
+    "optional": true
+  },
+  {
+    "name": "dsMin",
+    "doc": "Minium value allowed ",
+    "type": "number",
+    "optional": true
+  },
+  {
+    "name": "dsMax",
+    "doc": "Maximum value allowed ",
+    "type": "number",
+    "optional": true
+  },
+  {
+    "name": "dsPlaceholder",
+    "doc": "Input placeholder  ",
+    "type": "string",
+    "optional": true
+  },
+  {
+    "name": "dsStep",
+    "doc": "Legal number interval ",
+    "type": "number",
+    "optional": true
+  },
+  {
+    "name": "dsOnChange",
+    "doc": "On Change event method. Occurs when the state of the switch has been changed ",
+    "type": "(value: number) => void",
+    "optional": true
+  },
+  {
+    "name": "dsName",
+    "doc": "Input name ",
+    "type": "string",
+    "optional": true
+  },
+  {
+    "name": "dsClass",
+    "doc": "Support for adding Classes to element ",
+    "type": "string",
+    "optional": true,
+  },
+  {
+    "name": "disabled",
+    "doc": "Native HTML5 disabled property ",
+    "type": "boolean",
+    "optional": true
+  },
+  {
+    "name": "id",
+    "doc": "Support for adding ID attribute to element ",
+    "type": "string",
+    "optional": true
+  },
+  {
+    "name": "dsVariant",
+    "doc": "this is just for testing ",
+    "type": "'standard' | 'secondary' | 'primary'",
+    "optional": false
+  }
+]

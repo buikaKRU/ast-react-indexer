@@ -1,7 +1,7 @@
 import * as ts from 'typescript';
 import { AstReader } from './AstReader';
 
-export type DsComponentProp = {
+type DsComponentProp = {
   name: string;
   doc: string;
   type: string;
@@ -13,13 +13,19 @@ export default class AstPropsReader extends AstReader {
   constructor(protected file: string) {
     super(file);
     this.find();
+    this.findDefaultProps(this.sourceFile);
   }
 
+  /** Returns AstPropsReader object
+   * @param file - path to file
+   */
   static build = (file: string): AstPropsReader => {
     return new AstPropsReader(file);
   };
 
   private foundComponentProps: DsComponentProp[] = [];
+
+  private foundDefaultProps: {name: string, defaultValue: string}[] = []
 
   private find = (): void => {
     ts.forEachChild(this.sourceFile, fileNode => {
@@ -32,16 +38,44 @@ export default class AstPropsReader extends AstReader {
 
         propsInterfaceNodes.forEach(child => {
           if (child.kind === 317) {
-            // console.log(fileNode.kind);
-
             const syntaxList = child.getChildren(this.sourceFile);
-
             syntaxList.forEach(propertySignature => {
-              // console.log(propertySignature.getFullText(this.sourceFile));
               if (ts.isPropertySignature(propertySignature)) {
                 this.foundComponentProps.push(
                   this.compileProps(propertySignature)
                 );
+              }
+            });
+          }
+        });
+      }
+    });
+  };
+
+  private compileDefaultProps = (propertyNodes: ts.Node): void => {
+    const foundDefaultProps: [string, string][] = [];
+    console.log('compile default props');
+    propertyNodes.forEachChild(propertyNode => {
+      // console.log(node);
+      // node is an objectLiteralElement
+      if (ts.isObjectLiteralExpression(propertyNode)) {
+        console.log('*** *** *** *** *** *** *** \n \n');
+        propertyNode.forEachChild(objectLiteralNode => {
+          if (ts.isPropertyAssignment(objectLiteralNode)) {
+            // console.log(objectLiteralNode.getText(this.sourceFile));
+            objectLiteralNode.forEachChild(propertyAssignmentNode => {
+              let name: string;
+              let value: string;
+              if (ts.isIdentifier(propertyAssignmentNode)) {
+                name = `${propertyAssignmentNode.escapedText}`;
+                value = propertyAssignmentNode
+                  .getText(this.sourceFile)
+                  .replace(name, '')
+                  .replace('?', '')
+                  .replace(':', '')
+                  .replace(';', '')
+                  .replace('\n   ', '');
+                console.log(name, ' - ', value);
               }
             });
           }
@@ -62,14 +96,14 @@ export default class AstPropsReader extends AstReader {
     propertySignature.getChildren(this.sourceFile).forEach(item => {
       if (ts.isIdentifier(item)) {
         componentProp.name = item.getText(this.sourceFile);
-        console.log(componentProp.name);
       }
       if (ts.isJSDoc(item)) {
         componentProp.doc = item
           .getText(this.sourceFile)
           .replace('/**', '')
           .replace('*/', '')
-          .replace('*', '');
+          .replace('*', '')
+          .replace(/^\s*/, '')
       }
       if (item.kind === 57) {
         componentProp.optional = true;
@@ -82,11 +116,56 @@ export default class AstPropsReader extends AstReader {
       .replace('?', '')
       .replace(':', '')
       .replace(';', '')
-      .replace('\n   ', '');
+      .replace(/^\s*/, '')
+      // .replace('\n', '');
 
     return componentProp;
   };
 
+  private findDefaultPropsOld = (sourceFile: ts.Node): void => {
+    ts.forEachChild(sourceFile, fileNode => {
+      if (ts.isPropertyDeclaration(fileNode)) {
+        ts.forEachChild(fileNode, propertyNode => {
+          if (
+            ts.isIdentifier(propertyNode) &&
+            propertyNode.escapedText === 'defaultProps'
+          ) {
+            console.log('$$$$$$$ Default Props Found');
+            this.compileDefaultProps(fileNode);
+            return;
+          }
+          // if (ts.isPropertyAssignment(propertyNode)) {
+          //   console.log('-------- objectLiteral');
+          // }
+        });
+      } else {
+        if (fileNode.getChildCount(this.sourceFile) > 0) {
+          this.findDefaultPropsOld(fileNode);
+        }
+      }
+    });
+  };
+
+  private findDefaultProps = (sourceFile: ts.Node): void => {
+    ts.forEachChild(sourceFile, fileNode => {
+      if (ts.isExpressionStatement(fileNode)) {
+        ts.forEachChild(fileNode, expressionNode => {
+          if (ts.isBinaryExpression(expressionNode)) {
+            console.log('binaryExpression found')
+            if (this.findIdentifier('defaultProps', expressionNode)) {
+              console.log('defaultProps identifier found')
+            }
+     
+            return
+          }
+        })
+      } else if (fileNode.getChildCount(this.sourceFile) > 0) {
+        this.findDefaultProps(fileNode)
+      }
+    })
+  }
+
+  /** Returns found component props */
   get get(): DsComponentProp[] {
     return this.foundComponentProps;
   }
