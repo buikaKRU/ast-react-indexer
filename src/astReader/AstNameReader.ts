@@ -29,21 +29,22 @@ export class AstNameReader extends AstReader {
     let foundExport;
     const exportNode = this.findFirstNode(node => ts.isExportAssignment(node));
     if (exportNode) {
-      ts.forEachChild(
-        exportNode,
-        node =>
-          (foundExport = ts.isIdentifier(node) ? node.escapedText : undefined)
-      );
+      ts.forEachChild(exportNode, node => {
+        foundExport = ts.isIdentifier(node) ? node.escapedText : undefined;
+      });
     }
     return foundExport;
   };
 
-  /** Checks  if exported variable exists as React.FunctionalComponent type */
+  /** Checks if variable with specified name exists as React.FunctionalComponent type */
   private checkReactFunctionComponent = (componentName: string): boolean => {
     let toReturn = false;
     this.findNodes(node => ts.isVariableStatement(node)).forEach(node => {
       if (this.checkIdentifier(componentName, node)) {
-        const qualifiedNameNode = this.findFirstNode(n => ts.isQualifiedName(n), node);
+        const qualifiedNameNode = this.findFirstNode(
+          n => ts.isQualifiedName(n),
+          node
+        );
         if (
           this.checkIdentifier('React', qualifiedNameNode) &&
           this.checkIdentifier('FunctionComponent', qualifiedNameNode)
