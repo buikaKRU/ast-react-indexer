@@ -1,7 +1,15 @@
 import React, { useState } from 'react';
 import './DsNumber.scss';
 
-interface Props {
+interface testInterface {
+  name: string;
+  doc: string;
+  type: string;
+  optional: boolean;
+  defaultValue: string;
+}
+
+export interface Props {
   /** Quaity Assurance. Set for unique targeting during testing */
   dsQa: string;
   /** Label text displayed over the input */
@@ -28,6 +36,16 @@ interface Props {
   id?: string;
   /** this is just for testing */
   dsVariant: 'standard' | 'secondary' | 'primary';
+  /** for testing */
+  dsInterface: (
+    testInterface
+  ) => {
+    name: string;
+    doc: string;
+    type: string;
+    optional: boolean;
+    defaultValue: string;
+  };
 }
 
 const DsNumber: React.FunctionComponent<Props> = props => {

@@ -92,7 +92,7 @@ export default class AstPropsReader extends AstReader {
       doc: null,
       type: null,
       optional: false,
-      defaultValue: undefined
+      defaultValue: null
     };
 
     propertySignature.getChildren(this.sourceFile).forEach(item => {
@@ -106,18 +106,19 @@ export default class AstPropsReader extends AstReader {
           .replace('*/', '')
           .replace('*', '')
           .replace(/^\s*/, '');
-      }
-      if (item.kind === 57) {
-        componentProp.optional = true;
-      }
-    });
-
-    componentProp.type = propertySignature
+        }
+        if (item.kind === 57) {
+          componentProp.optional = true;
+        }
+      });
+      
+      componentProp.type = propertySignature
       .getText(this.sourceFile)
       .replace(componentProp.name, '')
       .replace('?', '')
       .replace(':', '')
       .replace(';', '')
+      .replace(/\n\s*/gm, '')
       .replace(/^\s*/, '');
 
     return componentProp;

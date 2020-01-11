@@ -3,19 +3,22 @@
     "name": "dsQa",
     "doc": "Quaity Assurance. Set for unique targeting during testing ",
     "type": "string",
-    "optional": false
+    "optional": false,
+    "defaultValue": null
   },
   {
     "name": "dsLabel",
     "doc": "Label text displayed over the input ",
     "type": "string",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsValue",
     "doc": "State of the input. Can be changed internally and externally ",
     "type": "number",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsMin",
@@ -35,7 +38,8 @@
     "name": "dsPlaceholder",
     "doc": "Input placeholder  ",
     "type": "string",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsStep",
@@ -48,19 +52,22 @@
     "name": "dsOnChange",
     "doc": "On Change event method. Occurs when the state of the switch has been changed ",
     "type": "(value: number) => void",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsName",
     "doc": "Input name ",
     "type": "string",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsClass",
     "doc": "Support for adding Classes to element ",
     "type": "string",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "disabled",
@@ -73,7 +80,8 @@
     "name": "id",
     "doc": "Support for adding ID attribute to element ",
     "type": "string",
-    "optional": true
+    "optional": true,
+    "defaultValue": null
   },
   {
     "name": "dsVariant",
@@ -81,5 +89,12 @@
     "type": "'standard' | 'secondary' | 'primary'",
     "optional": false,
     "defaultValue": "'standard'"
+  },
+  {
+    "name": "dsInterface",
+    "doc": "for testing ",
+    "type": "(testInterface) => {name: stringdoc: string;type: string;optional: boolean;defaultValue: string;};",
+    "optional": false,
+    "defaultValue": null
   }
 ]

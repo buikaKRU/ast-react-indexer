@@ -22,11 +22,12 @@ import AstPropsReader from './astReader/AstPropsReader';
 
 
 const nameReader = AstNameReader.build('src/DsNumber.tsx');
+console.log(nameReader.check("DsNumber"))
 console.log('Component name: ', nameReader.get);
 
 const componentPropsReader = AstPropsReader.build('src/DsNumber.tsx');
 const componentProps = componentPropsReader.get;
 writeFileSync(
   './outputProps.json',
-  JSON.stringify(componentProps, null, 2)
+  JSON.stringify(componentProps, (k, v) => v === undefined ? "undefined" : v, 2)
 );

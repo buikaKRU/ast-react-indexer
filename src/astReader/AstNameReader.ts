@@ -60,4 +60,9 @@ export class AstNameReader extends AstReader {
   get get(): string {
     return this.foundReactComponentName;
   }
+
+  /** Checks if there is a given react functional component name*/
+  check = (name: string) => {
+    return this.get === name;
+  };
 }
