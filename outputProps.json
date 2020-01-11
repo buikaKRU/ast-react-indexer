@@ -57,7 +57,7 @@
     "name": "dsClass",
     "doc": "Support for adding Classes to element ",
     "type": "string",
-    "optional": true,
+    "optional": true
   },
   {
     "name": "disabled",

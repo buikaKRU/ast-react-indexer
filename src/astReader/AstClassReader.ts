@@ -3,7 +3,7 @@ import * as ts from 'typescript';
 
 /** Reads ts class declaration name */
 export class AstClassReader extends AstReader {
-  /** Returns AstPropsReader object
+  /** Returns AstClassReader object
    * @param file - path to file
    */
   static build = (file: string): AstClassReader => {

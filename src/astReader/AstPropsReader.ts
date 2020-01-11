@@ -25,7 +25,7 @@ export default class AstPropsReader extends AstReader {
 
   private foundComponentProps: DsComponentProp[] = [];
 
-  private foundDefaultProps: {name: string, defaultValue: string}[] = []
+  private foundDefaultProps: { name: string; defaultValue: string }[] = [];
 
   private find = (): void => {
     ts.forEachChild(this.sourceFile, fileNode => {
@@ -103,7 +103,7 @@ export default class AstPropsReader extends AstReader {
           .replace('/**', '')
           .replace('*/', '')
           .replace('*', '')
-          .replace(/^\s*/, '')
+          .replace(/^\s*/, '');
       }
       if (item.kind === 57) {
         componentProp.optional = true;
@@ -116,8 +116,8 @@ export default class AstPropsReader extends AstReader {
       .replace('?', '')
       .replace(':', '')
       .replace(';', '')
-      .replace(/^\s*/, '')
-      // .replace('\n', '');
+      .replace(/^\s*/, '');
+    // .replace('\n', '');
 
     return componentProp;
   };
@@ -151,19 +151,19 @@ export default class AstPropsReader extends AstReader {
       if (ts.isExpressionStatement(fileNode)) {
         ts.forEachChild(fileNode, expressionNode => {
           if (ts.isBinaryExpression(expressionNode)) {
-            console.log('binaryExpression found')
-            if (this.findIdentifier('defaultProps', expressionNode)) {
-              console.log('defaultProps identifier found')
+            console.log('binaryExpression found');
+            if (this.checkIdentifier('defaultProps', expressionNode)) {
+              console.log('defaultProps identifier found');
             }
-     
-            return
+
+            return;
           }
-        })
+        });
       } else if (fileNode.getChildCount(this.sourceFile) > 0) {
-        this.findDefaultProps(fileNode)
+        this.findDefaultProps(fileNode);
       }
-    })
-  }
+    });
+  };
 
   /** Returns found component props */
   get get(): DsComponentProp[] {
