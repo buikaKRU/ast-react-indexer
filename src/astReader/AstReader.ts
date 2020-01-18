@@ -1,12 +1,12 @@
 import * as ts from 'typescript';
 
-export abstract class AstReader {
+export default class AstReader {
   constructor(protected file: string) {}
   protected program = ts.createProgram([this.file], { allowJs: true });
   protected sourceFile = this.program.getSourceFile(this.file);
 
   /** Checks if identifier exists in nodes */
-  protected checkIdentifier = (
+  public checkIdentifier = (
     identifier: string,
     nodes: ts.Node,
     toReturn: { value: boolean } = { value: false }
@@ -24,7 +24,7 @@ export abstract class AstReader {
   };
 
   /** Finds the first node which passes isCheck() */
-  protected findFirstNode = (
+  public findFirstNode = (
     isCheck: (node: ts.Node) => boolean,
     nodes: ts.Node = this.sourceFile,
     toReturn: {node: ts.Node} = {node: undefined},
@@ -42,7 +42,7 @@ export abstract class AstReader {
   };
 
   /** Finds all nodes which passes isCheck() */
-  protected findNodes = (
+  public findNodes = (
     isCheck: (node: ts.Node) => boolean,
     nodes: ts.Node = this.sourceFile,
     toReturn: ts.Node[] = []

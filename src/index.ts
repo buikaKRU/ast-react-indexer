@@ -1,10 +1,11 @@
-import { AstNameReader } from './astReader/AstNameReader';
-import { writeFileSync } from 'fs';
-import { simpleTransformer } from './simpleTransformer';
-import { reprintSections } from './reprintSections';
-import { AstClassReader } from './astReader/AstClassReader';
-import AstPropsReader from './astReader/AstPropsReader';
-import AstInterfaceReader from './astReader/AstInterfaceReader';
+
+// import { writeFileSync } from 'fs';
+// import { simpleTransformer } from './simpleTransformer';
+// import { reprintSections } from './reprintSections';
+// import { AstClassReader } from './astReader/AstClassReader';
+// import AstPropsReader from './astReader/AstPropsReader';
+// import AstInterfaceReader from './astReader/AstInterfaceReader';
+import AstReactReader from './astReader/AstReactReader';
 
 // simpleTransformer();
 // reprintSections('typescriptFile.ts', ['testingInterface'])
@@ -22,20 +23,24 @@ import AstInterfaceReader from './astReader/AstInterfaceReader';
 // });
 
 
-const nameReader = AstNameReader.build('src/DsSelect.tsx');
-console.log(nameReader.check("DsSelect"))
-console.log('Component name: ', nameReader.get);
+// const nameReader = AstNameReader.build('src/DsSelect.tsx');
+// console.log(nameReader.check("DsSelect"))
+// console.log('Component name: ', nameReader.get);
 
-const componentPropsReader = AstPropsReader.build('src/DsSelect.tsx');
-const componentProps = componentPropsReader.get;
-writeFileSync(
-  './outputProps.json',
-  JSON.stringify(componentProps, (k, v) => v === undefined ? "undefined" : v, 2)
-);
+// const componentPropsReader = AstPropsReader.build('src/DsSelect.tsx');
+// const componentProps = componentPropsReader.get;
+// writeFileSync(
+//   './outputProps.json',
+//   JSON.stringify(componentProps, (k, v) => v === undefined ? "undefined" : v, 2)
+// );
 
-const interfaceReader = AstInterfaceReader.build('src/DsSelect.tsx').get
-writeFileSync(
-  './outputInterfaces.json',
-  JSON.stringify(interfaceReader, (k, v) => v === undefined ? "undefined" : v, 2)
-);
-;
+// const interfaceReader = AstInterfaceReader.build('src/DsSelect.tsx').get
+// writeFileSync(
+//   './outputInterfaces.json',
+//   JSON.stringify(interfaceReader, (k, v) => v === undefined ? "undefined" : v, 2)
+// );
+
+
+const astReact = AstReactReader.build('src/DsSelect.tsx')
+console.log(astReact.name)
+console.log(astReact.nameCheck('DsSelect'))
