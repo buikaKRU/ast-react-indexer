@@ -3,8 +3,8 @@ import AstNameReader from './modules/AstNameReader';
 import AstReader from './modules/AstReader';
 import AstPropsReader from './modules/AstPropsReader';
 
-/** React Typescript Functional Components AST reader */
-export default class AstReactReader {
+/** React Typescript Functional Components AST indexer*/
+export default class AstReactIndexer {
   constructor(protected file: string) {
     this.astReader = new AstReader(file);
   }
@@ -12,8 +12,8 @@ export default class AstReactReader {
   /**  Builds the AST React Reader
    * @param file - path to processed file
    */
-  static build(file: string): AstReactReader {
-    return new AstReactReader(file);
+  static build(file: string): AstReactIndexer {
+    return new AstReactIndexer(file);
   }
 
   private astReader: AstReader;
