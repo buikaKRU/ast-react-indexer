@@ -27,7 +27,7 @@ export default class AstReader {
   public findFirstNode = (
     isCheck: (node: ts.Node) => boolean,
     nodes: ts.Node = this.sourceFile,
-    toReturn: {node: ts.Node} = {node: undefined},
+    toReturn: { node: ts.Node } = { node: undefined }
   ): ts.Node => {
     if (!toReturn.node) {
       ts.forEachChild(nodes, node => {

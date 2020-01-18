@@ -15,7 +15,7 @@ export default class AstNameReader {
   }
 
   /** Returns AstNameReader object
-   * @param file - path to file
+   * @param astReader - provide AstReader object
    */
   static build = (astReader: AstReader): AstNameReader => {
     return new AstNameReader(astReader);

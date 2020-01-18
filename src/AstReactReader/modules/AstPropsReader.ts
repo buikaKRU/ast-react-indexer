@@ -7,7 +7,7 @@ type DsDefaultProp = {
   value: string;
 };
 
-// interface DsComponentProps
+/** Compiles React Functional Component Props and defaultProps*/
 export default class AstPropsReader {
   constructor(private astReader: AstReader) {
     this.findDefaultProps();

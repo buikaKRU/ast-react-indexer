@@ -15,7 +15,7 @@ export type DsInterface = {
   properties: DsInterfaceProperty[];
 };
 
-// interface DsComponentProps
+/** Reads React Functional Component Interfaces */
 export default class AstInterfaceReader {
   constructor(private astReader: AstReader) {
     this.findInterface();
@@ -32,32 +32,34 @@ export default class AstInterfaceReader {
 
   private findInterface = (): void => {
     //TODO: chenge to ast.findNodes
-    ts.forEachChild(this.astReader.sourceFile, fileNode => {
-      if (!ts.isInterfaceDeclaration(fileNode)) {
-        return;
-      }
-      const newInterface: DsInterface = {
-        name: fileNode.name.escapedText as string,
-        properties: [],
-        exported: this.astReader.findFirstNode(node => node.kind === ts.SyntaxKind.ExportKeyword, fileNode)
-          ? true
-          : false
-      };
+    this.astReader
+      .findNodes(node => ts.isInterfaceDeclaration(node))
+      .forEach(fileNode => {
+        const newInterface: DsInterface = {
+          name: (fileNode as ts.InterfaceDeclaration).name.escapedText as string,
+          properties: [],
+          exported: this.astReader.findFirstNode(
+            node => node.kind === ts.SyntaxKind.ExportKeyword,
+            fileNode
+          )
+            ? true
+            : false
+        };
 
-      const propsInterfaceNodes = fileNode.getChildren(this.astReader.sourceFile);
+        const propsInterfaceNodes = fileNode.getChildren(this.astReader.sourceFile);
+        propsInterfaceNodes.forEach(child => {
+          if (child.kind === ts.SyntaxKind.SyntaxList) {
+            const syntaxList = child.getChildren(this.astReader.sourceFile);
 
-      propsInterfaceNodes.forEach(child => {
-        if (child.kind === 317) {
-          const syntaxList = child.getChildren(this.astReader.sourceFile);
-          syntaxList.forEach(propertySignature => {
-            if (ts.isPropertySignature(propertySignature)) {
-              newInterface.properties.push(this.compileInterface(propertySignature));
-            }
-          });
-        }
+            syntaxList.forEach(propertySignature => {
+              if (ts.isPropertySignature(propertySignature)) {
+                newInterface.properties.push(this.compileInterface(propertySignature));
+              }
+            });
+          }
+        });
+        this.foundInterfaces.push(newInterface);
       });
-      this.foundInterfaces.push(newInterface);
-    });
   };
 
   private compileInterface = (propertySignature: ts.Node): DsInterfaceProperty => {
@@ -65,7 +67,7 @@ export default class AstInterfaceReader {
       name: '',
       doc: null,
       type: null,
-      optional: false,
+      optional: false
     };
 
     propertySignature.getChildren(this.astReader.sourceFile).forEach(item => {

@@ -1,9 +1,7 @@
-
-import AstInterfaceReader, { DsInterface, DsInterfaceProperty } from './AstInterfaceReader';
-import AstNameReader from './AstNameReader';
-import * as ts from 'typescript';
-import AstReader from './AstReader';
-import AstPropsReader from './AstPropsReader';
+import AstInterfaceReader, { DsInterface, DsInterfaceProperty } from './modules/AstInterfaceReader';
+import AstNameReader from './modules/AstNameReader';
+import AstReader from './modules/AstReader';
+import AstPropsReader from './modules/AstPropsReader';
 
 /** React Typescript Functional Components AST reader */
 export default class AstReactReader {
@@ -11,6 +9,9 @@ export default class AstReactReader {
     this.astReader = new AstReader(file);
   }
 
+  /**  Builds the AST React Reader
+   * @param file - path to processed file
+   */
   static build(file: string): AstReactReader {
     return new AstReactReader(file);
   }
@@ -33,10 +34,9 @@ export default class AstReactReader {
     interfaces: DsInterface[];
   } {
     const allInterfaces = AstInterfaceReader.build(this.astReader).get;
-
     return {
       props: AstPropsReader.build(this.astReader).props(allInterfaces),
       interfaces: allInterfaces.filter(el => el.name !== 'Props')
-    }
+    };
   }
 }
