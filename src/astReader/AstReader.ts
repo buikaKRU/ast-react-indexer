@@ -3,7 +3,7 @@ import * as ts from 'typescript';
 export default class AstReader {
   constructor(protected file: string) {}
   protected program = ts.createProgram([this.file], { allowJs: true });
-  protected sourceFile = this.program.getSourceFile(this.file);
+  public sourceFile = this.program.getSourceFile(this.file);
 
   /** Checks if identifier exists in nodes */
   public checkIdentifier = (

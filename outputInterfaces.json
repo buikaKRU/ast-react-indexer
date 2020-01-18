@@ -1,105 +1,103 @@
-[
-  {
-    "name": "DsOption",
-    "properties": [
-      {
-        "name": "id",
-        "doc": "id of an optio ",
-        "type": "string | number",
-        "optional": false,
-        "defaultValue": null
-      },
-      {
-        "name": "value",
-        "doc": "text value ",
-        "type": "string",
-        "optional": false,
-        "defaultValue": null
-      }
-    ],
-    "exported": false
-  },
-  {
-    "name": "Props",
-    "properties": [
-      {
-        "name": "dsQa",
-        "doc": "Quaity Assurance. Set for unique targeting during testing ",
-        "type": "string",
-        "optional": false,
-        "defaultValue": null
-      },
-      {
-        "name": "dsForm",
-        "doc": "The form HTML elment id the DsSelect select element belongs to",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsLabel",
-        "doc": "Label text displayed over the Select ",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsOptions",
-        "doc": "Select options array",
-        "type": "DsOption[]",
-        "optional": false,
-        "defaultValue": null
-      },
-      {
-        "name": "dsDefaultOptionId",
-        "doc": "Default selected option id. Provide as id of option you want to be selected by default ",
-        "type": "string | number",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsPlaceholder",
-        "doc": "Placeholder. Displayed only if no dsDefaultValue provided ",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsOnChange",
-        "doc": "Event callback on user selecting an option ",
-        "type": "(selectedOption: DsOption,event: React.FormEvent<HTMLSelectElement>) => void",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsName",
-        "doc": "Input name ",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "dsClass",
-        "doc": "Support for adding Classes to element ",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "disabled",
-        "doc": "Native properties from HTML5, React etc. are not prefixed ",
-        "type": "boolean",
-        "optional": true,
-        "defaultValue": null
-      },
-      {
-        "name": "id",
-        "doc": "Support for adding ID attribute to element ",
-        "type": "string",
-        "optional": true,
-        "defaultValue": null
-      }
-    ],
-    "exported": true
-  }
-]
+{
+  "props": [
+    {
+      "name": "dsQa",
+      "doc": "Quaity Assurance. Set for unique targeting during testing ",
+      "type": "string",
+      "optional": false,
+      "defaultValue": null
+    },
+    {
+      "name": "dsForm",
+      "doc": "The form HTML elment id the DsSelect select element belongs to",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsLabel",
+      "doc": "Label text displayed over the Select ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsOptions",
+      "doc": "Select options array",
+      "type": "DsOption[]",
+      "optional": false,
+      "defaultValue": null
+    },
+    {
+      "name": "dsDefaultOptionId",
+      "doc": "Default selected option id. Provide as id of option you want to be selected by default ",
+      "type": "string | number",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsPlaceholder",
+      "doc": "Placeholder. Displayed only if no dsDefaultValue provided ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsOnChange",
+      "doc": "Event callback on user selecting an option ",
+      "type": "(selectedOption: DsOption,event: React.FormEvent<HTMLSelectElement>) => void",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsName",
+      "doc": "Input name ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "dsClass",
+      "doc": "Support for adding Classes to element ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "disabled",
+      "doc": "Native properties from HTML5, React etc. are not prefixed ",
+      "type": "boolean",
+      "optional": true,
+      "defaultValue": null
+    },
+    {
+      "name": "id",
+      "doc": "Support for adding ID attribute to element ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": null
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "DsOption",
+      "properties": [
+        {
+          "name": "id",
+          "doc": "id of an optio ",
+          "type": "string | number",
+          "optional": false,
+          "defaultValue": null
+        },
+        {
+          "name": "value",
+          "doc": "text value ",
+          "type": "string",
+          "optional": false,
+          "defaultValue": null
+        }
+      ],
+      "exported": true
+    }
+  ]
+}

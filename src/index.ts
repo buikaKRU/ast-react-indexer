@@ -6,6 +6,7 @@
 // import AstPropsReader from './astReader/AstPropsReader';
 // import AstInterfaceReader from './astReader/AstInterfaceReader';
 import AstReactReader from './astReader/AstReactReader';
+import { writeFileSync } from 'fs';
 
 // simpleTransformer();
 // reprintSections('typescriptFile.ts', ['testingInterface'])
@@ -44,3 +45,9 @@ import AstReactReader from './astReader/AstReactReader';
 const astReact = AstReactReader.build('src/DsSelect.tsx')
 console.log(astReact.name)
 console.log(astReact.nameCheck('DsSelect'))
+const interfaces = astReact.interface
+writeFileSync(
+  './outputInterfaces.json',
+  JSON.stringify(interfaces, (k, v) => v === undefined ? "undefined" : v, 2)
+);
+;
