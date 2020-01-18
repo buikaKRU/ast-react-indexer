@@ -21,11 +21,11 @@ import AstPropsReader from './astReader/AstPropsReader';
 // });
 
 
-const nameReader = AstNameReader.build('src/DsNumber.tsx');
-console.log(nameReader.check("DsNumber"))
+const nameReader = AstNameReader.build('src/DsSelect.tsx');
+console.log(nameReader.check("DsSelect"))
 console.log('Component name: ', nameReader.get);
 
-const componentPropsReader = AstPropsReader.build('src/DsNumber.tsx');
+const componentPropsReader = AstPropsReader.build('src/DsSelect.tsx');
 const componentProps = componentPropsReader.get;
 writeFileSync(
   './outputProps.json',

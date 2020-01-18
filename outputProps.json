@@ -7,51 +7,44 @@
     "defaultValue": null
   },
   {
-    "name": "dsLabel",
-    "doc": "Label text displayed over the input ",
+    "name": "dsForm",
+    "doc": "The form HTML elment id the DsSelect select element belongs to",
     "type": "string",
     "optional": true,
     "defaultValue": null
   },
   {
-    "name": "dsValue",
-    "doc": "State of the input. Can be changed internally and externally ",
-    "type": "number",
+    "name": "dsLabel",
+    "doc": "Label text displayed over the Select ",
+    "type": "string",
     "optional": true,
     "defaultValue": null
   },
   {
-    "name": "dsMin",
-    "doc": "Minium value allowed ",
-    "type": "number",
-    "optional": true,
-    "defaultValue": "0"
+    "name": "dsOptions",
+    "doc": "Select options array",
+    "type": "DsOption[]",
+    "optional": false,
+    "defaultValue": null
   },
   {
-    "name": "dsMax",
-    "doc": "Maximum value allowed ",
-    "type": "number",
+    "name": "dsDefaultOptionId",
+    "doc": "Default selected option id. Provide as id of option you want to be selected by default ",
+    "type": "string | number",
     "optional": true,
-    "defaultValue": "10"
+    "defaultValue": null
   },
   {
     "name": "dsPlaceholder",
-    "doc": "Input placeholder  ",
+    "doc": "Placeholder. Displayed only if no dsDefaultValue provided ",
     "type": "string",
     "optional": true,
     "defaultValue": null
   },
   {
-    "name": "dsStep",
-    "doc": "Legal number interval ",
-    "type": "number",
-    "optional": true,
-    "defaultValue": "1"
-  },
-  {
     "name": "dsOnChange",
-    "doc": "On Change event method. Occurs when the state of the switch has been changed ",
-    "type": "(value: number) => void",
+    "doc": "Event callback on user selecting an option ",
+    "type": "(selectedOption: DsOption,event: React.FormEvent<HTMLSelectElement>) => void",
     "optional": true,
     "defaultValue": null
   },
@@ -71,7 +64,7 @@
   },
   {
     "name": "disabled",
-    "doc": "Native HTML5 disabled property ",
+    "doc": "Native properties from HTML5, React etc. are not prefixed ",
     "type": "boolean",
     "optional": true,
     "defaultValue": "false"
@@ -81,20 +74,6 @@
     "doc": "Support for adding ID attribute to element ",
     "type": "string",
     "optional": true,
-    "defaultValue": null
-  },
-  {
-    "name": "dsVariant",
-    "doc": "this is just for testing ",
-    "type": "'standard' | 'secondary' | 'primary'",
-    "optional": false,
-    "defaultValue": "'standard'"
-  },
-  {
-    "name": "dsInterface",
-    "doc": "for testing ",
-    "type": "(testInterface) => {name: stringdoc: string;type: string;optional: boolean;defaultValue: string;};",
-    "optional": false,
     "defaultValue": null
   }
 ]

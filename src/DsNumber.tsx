@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import './DsNumber.scss';
+import { TypeExportTest, InterfaceExportTest } from './TypesAndInterfaces';
 
 interface testInterface {
   name: string;
   doc: string;
   type: string;
-  optional: boolean;
+  optional: TypeExportTest[];
   defaultValue: string;
 }
 
@@ -38,13 +39,13 @@ export interface Props {
   dsVariant: 'standard' | 'secondary' | 'primary';
   /** for testing */
   dsInterface: (
-    testInterface
+    testInterface: InterfaceExportTest
   ) => {
     name: string;
     doc: string;
     type: string;
     optional: boolean;
-    defaultValue: string;
+    value: testInterface[]
   };
 }
 
