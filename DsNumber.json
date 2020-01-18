@@ -1,0 +1,140 @@
+{
+  "props": [
+    {
+      "name": "dsQa",
+      "doc": "Quaity Assurance. Set for unique targeting during testing ",
+      "type": "string",
+      "optional": false,
+      "defaultValue": "'DsNumber'"
+    },
+    {
+      "name": "dsLabel",
+      "doc": "Label text displayed over the input ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsValue",
+      "doc": "State of the input. Can be changed internally and externally ",
+      "type": "number",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsMin",
+      "doc": "Minium value allowed ",
+      "type": "number",
+      "optional": true,
+      "defaultValue": "0"
+    },
+    {
+      "name": "dsMax",
+      "doc": "Maximum value allowed ",
+      "type": "number",
+      "optional": true,
+      "defaultValue": "10"
+    },
+    {
+      "name": "dsPlaceholder",
+      "doc": "Input placeholder  ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsStep",
+      "doc": "Legal number interval ",
+      "type": "number",
+      "optional": true,
+      "defaultValue": "1"
+    },
+    {
+      "name": "dsOnChange",
+      "doc": "On Change event method. Occurs when the state of the switch has been changed ",
+      "type": "(value: number) => void",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsName",
+      "doc": "Input name ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsClass",
+      "doc": "Support for adding Classes to element ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "disabled",
+      "doc": "Native HTML5 disabled property ",
+      "type": "boolean",
+      "optional": true,
+      "defaultValue": "false"
+    },
+    {
+      "name": "id",
+      "doc": "Support for adding ID attribute to element ",
+      "type": "string",
+      "optional": true,
+      "defaultValue": "undefined"
+    },
+    {
+      "name": "dsVariant",
+      "doc": "this is just for testing ",
+      "type": "'standard' | 'secondary' | 'primary'",
+      "optional": false,
+      "defaultValue": "'standard'"
+    },
+    {
+      "name": "dsInterface",
+      "doc": "for testing ",
+      "type": "(testInterface: InterfaceExportTest) => {name: stringdoc: string;type: string;optional: boolean;value: testInterface[];};",
+      "optional": false,
+      "defaultValue": "undefined"
+    }
+  ],
+  "interfaces": [
+    {
+      "name": "testInterface",
+      "properties": [
+        {
+          "name": "name",
+          "doc": null,
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "doc",
+          "doc": null,
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "type",
+          "doc": null,
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "optional",
+          "doc": null,
+          "type": "TypeExportTest[]",
+          "optional": false
+        },
+        {
+          "name": "defaultValue",
+          "doc": null,
+          "type": "string",
+          "optional": false
+        }
+      ],
+      "exported": false
+    }
+  ]
+}

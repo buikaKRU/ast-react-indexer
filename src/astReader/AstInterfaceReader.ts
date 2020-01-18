@@ -6,7 +6,7 @@ export type DsInterfaceProperty = {
   doc: string;
   type: string;
   optional: boolean;
-  defaultValue: null;
+  defaultValue?: string;
 };
 
 export type DsInterface = {
@@ -17,7 +17,7 @@ export type DsInterface = {
 
 // interface DsComponentProps
 export default class AstInterfaceReader {
-  constructor(protected astReader: AstReader) {
+  constructor(private astReader: AstReader) {
     this.findInterface();
   }
 
@@ -66,7 +66,6 @@ export default class AstInterfaceReader {
       doc: null,
       type: null,
       optional: false,
-      defaultValue: null
     };
 
     propertySignature.getChildren(this.astReader.sourceFile).forEach(item => {

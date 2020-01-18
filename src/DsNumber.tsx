@@ -45,7 +45,7 @@ export interface Props {
     doc: string;
     type: string;
     optional: boolean;
-    value: testInterface[]
+    value: testInterface[];
   };
 }
 
@@ -73,18 +73,14 @@ const DsNumber: React.FunctionComponent<Props> = props => {
     dsOnChange && dsOnChange(value);
   };
 
-  const labelContent = dsLabel ? (
-    <strong className={`ds-Number_Label`}>{dsLabel}</strong>
-  ) : null;
+  const labelContent = dsLabel ? <strong className={`ds-Number_Label`}>{dsLabel}</strong> : null;
 
   return (
     <label
       id={id ? id : undefined}
-      className={[
-        'ds-Number',
-        disabled ? 'ds-Number-disabled' : '',
-        dsClass ? dsClass : ''
-      ].join(' ')}
+      className={['ds-Number', disabled ? 'ds-Number-disabled' : '', dsClass ? dsClass : ''].join(
+        ' '
+      )}
     >
       {labelContent}
       <input
@@ -109,7 +105,8 @@ DsNumber.defaultProps = {
   dsMin: 0,
   dsMax: 10,
   disabled: false,
-  dsVariant: 'standard'
+  dsVariant: 'standard',
+  dsQa: 'DsNumber'
 };
 
 export default DsNumber;

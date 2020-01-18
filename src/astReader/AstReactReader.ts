@@ -1,12 +1,11 @@
-import { Props } from './../DsSelect';
+
 import AstInterfaceReader, { DsInterface, DsInterfaceProperty } from './AstInterfaceReader';
 import AstNameReader from './AstNameReader';
 import * as ts from 'typescript';
 import AstReader from './AstReader';
+import AstPropsReader from './AstPropsReader';
 
-// export interface  {
-
-// }
+/** React Typescript Functional Components AST reader */
 export default class AstReactReader {
   constructor(protected file: string) {
     this.astReader = new AstReader(file);
@@ -18,28 +17,26 @@ export default class AstReactReader {
 
   private astReader: AstReader;
 
-  /** Returns name of found exported React.FunctionComponent */
+  /** Returns name of found exported React.FunctionComponent type function*/
   public get name() {
     return AstNameReader.build(this.astReader).get;
   }
 
-  /** Checks if there is a given name React.FunctionComponent exported*/
+  /** Checks if there is a given name React.FunctionComponent type function exported*/
   public nameCheck = (name: string) => {
     return AstNameReader.build(this.astReader).check(name);
   };
 
+  /** Returns React Functional Component Interface as an object of props and interfaces found  */
   public get interface(): {
     props: DsInterfaceProperty[];
     interfaces: DsInterface[];
   } {
-    const componentInterface = AstInterfaceReader.build(this.astReader).get;
-    const componentProps: DsInterfaceProperty[] = []
-    const propsInterfaceArr = componentInterface.filter(el => el.name === 'Props')
-    propsInterfaceArr.length > 0 && propsInterfaceArr[0].properties.forEach(p => componentProps.push(p))
-    
+    const allInterfaces = AstInterfaceReader.build(this.astReader).get;
+
     return {
-      props: componentProps,
-      interfaces: componentInterface.filter(el => el.name !== 'Props')
+      props: AstPropsReader.build(this.astReader).props(allInterfaces),
+      interfaces: allInterfaces.filter(el => el.name !== 'Props')
     }
   }
 }

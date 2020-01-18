@@ -58,7 +58,8 @@
       "name": "disabled",
       "doc": "Native properties from HTML5, React etc. are not prefixed ",
       "type": "boolean",
-      "optional": true
+      "optional": true,
+      "defaultValue": "false"
     },
     {
       "name": "id",

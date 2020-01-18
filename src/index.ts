@@ -1,4 +1,3 @@
-
 // import { writeFileSync } from 'fs';
 // import { simpleTransformer } from './simpleTransformer';
 // import { reprintSections } from './reprintSections';
@@ -23,7 +22,6 @@ import { writeFileSync } from 'fs';
 //   console.log(prop.type);
 // });
 
-
 // const nameReader = AstNameReader.build('src/DsSelect.tsx');
 // console.log(nameReader.check("DsSelect"))
 // console.log('Component name: ', nameReader.get);
@@ -41,13 +39,11 @@ import { writeFileSync } from 'fs';
 //   JSON.stringify(interfaceReader, (k, v) => v === undefined ? "undefined" : v, 2)
 // );
 
-
-const astReact = AstReactReader.build('src/DsSelect.tsx')
-console.log(astReact.name)
-console.log(astReact.nameCheck('DsSelect'))
-const interfaces = astReact.interface
+const astReact = AstReactReader.build('src/DsNumber.tsx');
+const name = astReact.name || 'default'
+console.log(astReact.nameCheck('DsSelect'), name);
+const interfaces = astReact.interface;
 writeFileSync(
-  './outputInterfaces.json',
-  JSON.stringify(interfaces, (k, v) => v === undefined ? "undefined" : v, 2)
+  `./${name}.json`,
+  JSON.stringify(interfaces, (k, v) => (v === undefined ? 'undefined' : v), 2)
 );
-;
