@@ -1,8 +1,10 @@
 import React from 'react';
 import './DsSelect.scss';
 
-export interface DsOption {
+interface DsOption {
+  /** id of an optio */
   id: string | number;
+  /** text value */
   value: string;
 }
 

@@ -4,6 +4,7 @@ import { simpleTransformer } from './simpleTransformer';
 import { reprintSections } from './reprintSections';
 import { AstClassReader } from './astReader/AstClassReader';
 import AstPropsReader from './astReader/AstPropsReader';
+import AstInterfaceReader from './astReader/AstInterfaceReader';
 
 // simpleTransformer();
 // reprintSections('typescriptFile.ts', ['testingInterface'])
@@ -31,3 +32,10 @@ writeFileSync(
   './outputProps.json',
   JSON.stringify(componentProps, (k, v) => v === undefined ? "undefined" : v, 2)
 );
+
+const interfaceReader = AstInterfaceReader.build('src/DsSelect.tsx').get
+writeFileSync(
+  './outputInterfaces.json',
+  JSON.stringify(interfaceReader, (k, v) => v === undefined ? "undefined" : v, 2)
+);
+;
