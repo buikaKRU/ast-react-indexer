@@ -9,7 +9,7 @@ export default class AstReactIndexer {
     this.astReader = new AstReader(file);
   }
 
-  /**  Builds the AST React Reader
+  /**  Builds the AST React Indexer
    * @param file - path to processed file
    */
   static build(file: string): AstReactIndexer {

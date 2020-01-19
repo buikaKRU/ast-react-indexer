@@ -2,7 +2,7 @@ import React from './node_modules/react';
 import './ExSelect.scss';
 
 export interface ExOption {
-  /** id of an optio */
+  /** id of an option */
   id: string | number;
   /** text value */
   value: string;
