@@ -5,6 +5,8 @@ export default class AstReader {
   protected program = ts.createProgram([this.file], { allowJs: true });
   public sourceFile = this.program.getSourceFile(this.file);
 
+
+  public testowanie = () => {}
   /** Checks if identifier exists in nodes */
   public checkIdentifier = (
     identifier: string,

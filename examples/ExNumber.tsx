@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { TypeExportTest, InterfaceExportTest } from './TypesAndInterfaces';
+import './ExNumber.scss'
 
 interface testInterface {
   name: string;

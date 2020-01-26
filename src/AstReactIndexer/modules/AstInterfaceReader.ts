@@ -31,7 +31,7 @@ export default class AstInterfaceReader {
   private foundInterfaces: DsInterface[] = [];
 
   private findInterface = (): void => {
-    //TODO: chenge to ast.findNodes
+
     this.astReader
       .findNodes(node => ts.isInterfaceDeclaration(node))
       .forEach(fileNode => {

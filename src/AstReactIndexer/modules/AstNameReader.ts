@@ -1,15 +1,11 @@
-import  AstReader  from './AstReader';
+import AstReader from './AstReader';
 import * as ts from 'typescript';
 
 /** Reads React functional component name */
 export default class AstNameReader {
   constructor(protected astReader: AstReader) {
-
     const defaultExportName = this.findExport();
-    if (
-      defaultExportName &&
-      this.checkReactFunctionComponent(defaultExportName)
-    ) {
+    if (defaultExportName && this.checkReactFunctionComponent(defaultExportName)) {
       this.foundReactComponentName = defaultExportName;
     }
   }
@@ -26,7 +22,8 @@ export default class AstNameReader {
   /** Finds default export variable name */
   private findExport = (): string => {
     let foundExport;
-    const exportNode =  this.astReader.findFirstNode(node => ts.isExportAssignment(node));
+    const exportNode = this.astReader.findFirstNode(node => ts.isExportAssignment(node));
+
     if (exportNode) {
       ts.forEachChild(exportNode, node => {
         foundExport = ts.isIdentifier(node) ? node.escapedText : undefined;
@@ -38,20 +35,19 @@ export default class AstNameReader {
   /** Checks if variable with specified name exists as React.FunctionalComponent type */
   private checkReactFunctionComponent = (componentName: string): boolean => {
     let toReturn = false;
-    this.astReader.findNodes(node => ts.isVariableStatement(node)).forEach(node => {
-      if (this.astReader.checkIdentifier(componentName, node)) {
-        const qualifiedNameNode = this.astReader.findFirstNode(
-          n => ts.isQualifiedName(n),
-          node
-        );
-        if (
-          this.astReader.checkIdentifier('React', qualifiedNameNode) &&
-          this.astReader.checkIdentifier('FunctionComponent', qualifiedNameNode)
-        ) {
-          toReturn = true;
+    this.astReader
+      .findNodes(node => ts.isVariableStatement(node))
+      .forEach(node => {
+        if (this.astReader.checkIdentifier(componentName, node)) {
+          const qualifiedNameNode = this.astReader.findFirstNode(n => ts.isQualifiedName(n), node);
+          if (
+            this.astReader.checkIdentifier('React', qualifiedNameNode) &&
+            this.astReader.checkIdentifier('FunctionComponent', qualifiedNameNode)
+          ) {
+            toReturn = true;
+          }
         }
-      }
-    });
+      });
     return toReturn;
   };
 
