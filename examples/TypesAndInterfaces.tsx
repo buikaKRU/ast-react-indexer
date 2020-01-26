@@ -1,3 +1,6 @@
+import './ExNumber.scss';
+import 'react';
+
 export type TypeExportTest = {
   name: string;
   id: number;

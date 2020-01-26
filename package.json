@@ -4,10 +4,10 @@
   "description": "React Typescript Functional Components AST Indexer",
   "main": "build/index.js",
   "scripts": {
-    "start": "nodemon --ignore '*.json' build/index.js",
+    "start": "nodemon --ignore '*.json' --watch build build/index.js ",
     "dev": "npm run build && concurrently \"npm start\" \"npm run build:watch\"",
-    "build": "tsc src/index.ts --outDir build/ -d -t ES5",
-    "build:watch": "tsc src/index.ts  --outDir build/ -d -t ES5 -w"
+    "build": "tsc --rootDir src src/index.ts --outDir build/ -d -t ES5",
+    "build:watch": "tsc --outDir build/ --rootDir src src/index.ts -d -t ES5 -w"
   },
   "author": "mateusz przybylowski",
   "license": "MIT",
