@@ -1,4 +1,4 @@
-import './ExNumber.scss';
+import './ExNumber.css';
 import 'react';
 export declare type TypeExportTest = {
     name: string;

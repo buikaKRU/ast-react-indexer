@@ -12,7 +12,9 @@ writeFileSync(
 
 
 import TscCompiler from './TscCompiler';
-new TscCompiler('./examples/index.tsx').compile();
+const tscCompiler = new TscCompiler('./examples/index.tsx')
+tscCompiler.transform = 'a test'
+tscCompiler.compile();
 //1 2 3 4
 
 
@@ -71,24 +73,24 @@ function simpleTransformer<T extends ts.Node>(): ts.TransformerFactory<T> {
     };
     return node => ts.visitNode(node, visit);
   };
-}
+};
 
-let source = `
-import './ExNumber.scss'
-import './ExSrc.scss'
+// let source = `
+// import './ExNumber.scss'
+// import './ExSrc.scss'
 
-@customElement('x-foo')
-class XFoo {}
+// @customElement('x-foo')
+// class XFoo {}
 
-`;
-let result = ts.transpileModule(source, {
-  compilerOptions: { module: ts.ModuleKind.CommonJS },
-  transformers: { before: [simpleTransformer()] }
-});
+// `;
+// let result = ts.transpileModule(source, {
+//   compilerOptions: { module: ts.ModuleKind.CommonJS },
+//   transformers: { before: [simpleTransformer()] }
+// });
 
-// console.log(result.outputText);;
+// // console.log(result.outputText);;
 
-writeFileSync(
-  `./outDir/transpilerResult.js`,result.outputText
-);
+// writeFileSync(
+//   `./outDir/transpilerResult.js`,result.outputText
+// );
 

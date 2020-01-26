@@ -1,4 +1,4 @@
-import './ExSelect.scss';
+import './ExSelect.css';
 export interface ExOption {
     /** id of an option */
     id: string | number;

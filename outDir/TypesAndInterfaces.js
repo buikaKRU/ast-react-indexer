@@ -1,5 +1,5 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-require("./ExNumber.scss");
+require("./ExNumber.css");
 require("react");
 //reading test
