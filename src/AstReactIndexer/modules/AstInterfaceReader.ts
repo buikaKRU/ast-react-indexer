@@ -31,22 +31,20 @@ export default class AstInterfaceReader {
   private foundInterfaces: DsInterface[] = [];
 
   private findInterface = (): void => {
-    //TODO: chenge to ast.findNodes
-    this.astReader
-      .findNodes(node => ts.isInterfaceDeclaration(node))
-      .forEach(fileNode => {
+    const interfaceNodes = this.astReader.findNodes(node => ts.isInterfaceDeclaration(node))
+    interfaceNodes.forEach(interfaceNode => {
         const newInterface: DsInterface = {
-          name: (fileNode as ts.InterfaceDeclaration).name.escapedText as string,
+          name: (interfaceNode as ts.InterfaceDeclaration).name.escapedText as string,
           properties: [],
           exported: this.astReader.findFirstNode(
             node => node.kind === ts.SyntaxKind.ExportKeyword,
-            fileNode
+            interfaceNode
           )
             ? true
             : false
         };
 
-        const propsInterfaceNodes = fileNode.getChildren(this.astReader.sourceFile);
+        const propsInterfaceNodes = interfaceNode.getChildren(this.astReader.sourceFile);
         propsInterfaceNodes.forEach(child => {
           if (child.kind === ts.SyntaxKind.SyntaxList) {
             const syntaxList = child.getChildren(this.astReader.sourceFile);
