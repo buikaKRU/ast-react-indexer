@@ -21,7 +21,7 @@ export default class AstInterfaceReader {
     this.findInterface();
   }
 
-  /** Returns AstPropsReader object
+  /** Returns AstInterfaceReader object
    * @param file - path to file
    */
   static build = (astReder: AstReader): AstInterfaceReader => {

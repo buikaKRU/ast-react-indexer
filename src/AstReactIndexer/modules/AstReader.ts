@@ -31,7 +31,7 @@ export default class AstReader {
   ): ts.Node => {
     if (!toReturn.node) {
       ts.forEachChild(nodes, node => {
-        if (isCheck(node)) {
+        if (isCheck(node) && !toReturn.node) {
           toReturn.node = node;
         } else if (node.getChildCount(this.sourceFile) > 0) {
           this.findFirstNode(isCheck, node, toReturn);
