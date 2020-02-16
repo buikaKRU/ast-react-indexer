@@ -28,7 +28,7 @@ export default class AstReactIndexer {
     return AstNameReader.build(this.astReader).check(name);
   };
 
-  /** Reads and returns React Functional Component props, interfaces and types aliases  */
+  /** Indexes and returns React Functional Component props, interfaces and types aliases  */
   public get interface(): {
     props: DsInterfaceProperty[];
     interfaces: DsInterface[];
