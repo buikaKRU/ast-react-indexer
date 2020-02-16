@@ -3,7 +3,7 @@ import AstNameReader from './modules/AstNameReader';
 import AstReader from './modules/AstReader';
 import AstPropsReader from './modules/AstPropsReader';
 
-/** React Typescript Functional Components AST indexer*/
+/** React Typescript Functional Components AST indexer for interfaces, types aliases and props */
 export default class AstReactIndexer {
   constructor(protected file: string) {
     this.astReader = new AstReader(file);
@@ -28,15 +28,19 @@ export default class AstReactIndexer {
     return AstNameReader.build(this.astReader).check(name);
   };
 
-  /** Returns React Functional Component Interface as an object of props and interfaces found  */
+  /** Reads and returns React Functional Component props, interfaces and types aliases  */
   public get interface(): {
     props: DsInterfaceProperty[];
     interfaces: DsInterface[];
+    types: DsInterface[];
   } {
-    const allInterfaces = AstInterfaceReader.build(this.astReader).get;
+    const interfaceReader = AstInterfaceReader.build(this.astReader);
+    const allInterfaces = interfaceReader.getInterfaces;
+    const typesAliases = interfaceReader.typesAliases;
     return {
       props: AstPropsReader.build(this.astReader).props(allInterfaces),
-      interfaces: allInterfaces.filter(el => el.name !== 'Props')
+      interfaces: allInterfaces.filter(el => el.name !== 'Props'),
+      types: typesAliases
     };
   }
 }

@@ -7,15 +7,13 @@ type DsDefaultProp = {
   value: string;
 };
 
-/** Compiles React Functional Component Props and defaultProps*/
+/** Compiles React Functional Component Props with defaultProps*/
 export default class AstPropsReader {
   constructor(private astReader: AstReader) {
     this.findDefaultProps();
   }
 
-  /** Returns AstPropsReader object
-   * @param file - path to file
-   */
+  /** Returns AstPropsReader object s*/
   static build = (astReader: AstReader): AstPropsReader => {
     return new AstPropsReader(astReader);
   };

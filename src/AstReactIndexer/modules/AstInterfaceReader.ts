@@ -19,6 +19,7 @@ export type DsInterface = {
 export default class AstInterfaceReader {
   constructor(private astReader: AstReader) {
     this.findInterface();
+    this.findTypeAliases();
   }
 
   /** Returns AstInterfaceReader object
@@ -29,35 +30,70 @@ export default class AstInterfaceReader {
   };
 
   private foundInterfaces: DsInterface[] = [];
+  private foundTypesAliases: DsInterface[] = [];
 
   private findInterface = (): void => {
-    const interfaceNodes = this.astReader.findNodes(node => ts.isInterfaceDeclaration(node))
+    const interfaceNodes = this.astReader.findNodes(node => {
+      return ts.isInterfaceDeclaration(node);
+    });
     interfaceNodes.forEach(interfaceNode => {
-        const newInterface: DsInterface = {
-          name: (interfaceNode as ts.InterfaceDeclaration).name.escapedText as string,
-          properties: [],
-          exported: this.astReader.findFirstNode(
-            node => node.kind === ts.SyntaxKind.ExportKeyword,
-            interfaceNode
-          )
-            ? true
-            : false
-        };
+      const newInterface: DsInterface = {
+        name: (interfaceNode as ts.InterfaceDeclaration).name.escapedText as string,
+        properties: [],
+        exported: this.astReader.findFirstNode(
+          node => node.kind === ts.SyntaxKind.ExportKeyword,
+          interfaceNode
+        )
+          ? true
+          : false
+      };
 
-        const propsInterfaceNodes = interfaceNode.getChildren(this.astReader.sourceFile);
-        propsInterfaceNodes.forEach(child => {
-          if (child.kind === ts.SyntaxKind.SyntaxList) {
-            const syntaxList = child.getChildren(this.astReader.sourceFile);
+      const propsInterfaceNodes = interfaceNode.getChildren(this.astReader.sourceFile);
+      propsInterfaceNodes.forEach(child => {
+        if (child.kind === ts.SyntaxKind.SyntaxList) {
+          const syntaxList = child.getChildren(this.astReader.sourceFile);
 
-            syntaxList.forEach(propertySignature => {
-              if (ts.isPropertySignature(propertySignature)) {
-                newInterface.properties.push(this.compileInterface(propertySignature));
-              }
-            });
-          }
-        });
-        this.foundInterfaces.push(newInterface);
+          syntaxList.forEach(propertySignature => {
+            if (ts.isPropertySignature(propertySignature)) {
+              newInterface.properties.push(this.compileInterface(propertySignature));
+            }
+          });
+        }
       });
+      this.foundInterfaces.push(newInterface);
+    });
+  };
+
+  private findTypeAliases = (): void => {
+    const typeAliases = this.astReader.findNodes(node => ts.isTypeAliasDeclaration(node));
+    typeAliases.forEach(typeNode => {
+      const newTypeAlias: DsInterface = {
+        name: (typeNode as ts.TypeAliasDeclaration).name.escapedText as string,
+        properties: [],
+        exported: this.astReader.findFirstNode(
+          node => node.kind === ts.SyntaxKind.ExportKeyword,
+          typeNode
+        )
+          ? true
+          : false
+      };
+
+      const typeLiteral = this.astReader.findFirstNode(
+        node => ts.isTypeLiteralNode(node),
+        typeNode
+      );
+
+      typeLiteral &&
+        typeLiteral.getChildren(this.astReader.sourceFile).forEach(node => {
+          node.kind === ts.SyntaxKind.SyntaxList &&
+            node.getChildren(this.astReader.sourceFile).forEach(prop => {
+              ts.isPropertySignature(prop) &&
+                newTypeAlias.properties.push(this.compileInterface(prop));
+            });
+        });
+
+      this.foundTypesAliases.push(newTypeAlias);
+    });
   };
 
   private compileInterface = (propertySignature: ts.Node): DsInterfaceProperty => {
@@ -97,8 +133,13 @@ export default class AstInterfaceReader {
     return interfaceProp;
   };
 
-  /** Returns found component props */
-  get get(): DsInterface[] {
+  /** Returns found component interfaces */
+  get getInterfaces(): DsInterface[] {
     return this.foundInterfaces;
+  }
+
+  /** Returns found component types aliases*/
+  get typesAliases(): DsInterface[] {
+    return this.foundTypesAliases;
   }
 }

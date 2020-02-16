@@ -5,6 +5,7 @@ export type TypeExportTest = {
 };
 
 export interface InterfaceExportTest {
+  id: number;
   name: string;
-  onClick: (value: number) => string;
+  onClick: (value: number) => TypeExportTest;
 }
