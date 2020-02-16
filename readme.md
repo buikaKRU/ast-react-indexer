@@ -1,5 +1,5 @@
 # React Typescript Functional Components AST Indexer
-### v 1.1s.0
+### v 1.1.0
 
 
 ## Purpose:
