@@ -1,6 +1,6 @@
 {
   "name": "ast-react-indexer",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "React Typescript Functional Components AST Indexer",
   "main": "build/index.js",
   "scripts": {
