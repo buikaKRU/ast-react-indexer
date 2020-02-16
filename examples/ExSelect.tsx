@@ -9,7 +9,7 @@ export type ExOption = {
   value: string;
 }
 
-type olusia_podpowedz = {
+export type olusia_podpowedz = {
   '4xg17level_[border:3': boolean;
   1: number;
   /** test test description */
